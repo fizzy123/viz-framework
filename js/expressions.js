@@ -4,7 +4,13 @@ const expressions = [
   strobeExp,
   scrollExp,
   kaleidExp,
-  invertExp
+  invertExp,
+  modulateNoise,
+  modulateHue,
+  modulateRepeatNoise,
+  modulatePixelateNoise,
+  modulateVoronoi,
+  colorSweep,
 ]
 
 function noOpExp(source) {
@@ -51,4 +57,49 @@ function invertExp(source) {
     .invert()
     .out(o0)
   render(o0)
+}
+
+function modulateNoise(source) {
+    source
+      .modulate(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .out(o0)
+    render(o0)
+}
+
+function modulateHue(source) {
+    source
+      .modulate(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .out(o0)
+    src(o1)
+      .modulateHue(src(o1).scale(1.01),10)
+      .layer(o0)
+      .out(o1)
+    render(o1)
+}
+
+function modulateRepeatNoise(source) {
+    source
+      .modulateRepeat(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .out(o0)
+    render(o0)
+}
+
+function modulatePixelateNoise(source) {
+    source
+      .modulateRepeat(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .out(o0)
+    render(o0)
+}
+
+function modulateVoronoi(source) {
+    source
+      .modulate(voronoi().scrollX(Math.random()))
+      .out(o0)
+    render(o0)
+}
+
+function colorSweep(source) {
+    source.out(o0)
+    osc(10,Math.random(),1).rotate(Math.random()).mask(solid().layer(src(o0))).out(o1)
+    render(o1)
 }
