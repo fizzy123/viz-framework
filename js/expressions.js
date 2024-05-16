@@ -61,7 +61,7 @@ function invertExp(source) {
 
 function modulateNoise(source) {
     source
-      .modulate(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .modulateNoise(noise().scale(2 + Math.random() * 4).scrollX(Math.random()).scrollY(Math.random())
       .out(o0)
     render(o0)
 }
@@ -96,6 +96,41 @@ function modulateVoronoi(source) {
       .modulate(voronoi().scrollX(Math.random()))
       .out(o0)
     render(o0)
+}
+
+function modulateSelf(source) {
+  source
+    .modulate(source, ()=>Math.random())
+    .out(o0)
+  render(o0)
+}
+
+function modulateOsc(source) {
+  source
+    .modulate(osc(10, 0.1, 0.5), ()=>Math.random())
+    .out(o0)
+  render(o0)
+}
+
+function modulateFeedback(source) {
+  source
+    .modulate(src(o0).scrollX(0.01).scrollY(0.005), ()=>(Math.random()))
+    .out(o0)
+  render(o0)
+}
+
+function modulateFeedback(source) {
+  source
+    .modulate(src(o0).scrollX(0.01).scrollY(0.005), ()=>(Math.random()))
+    .out(o0)
+  render(o0)
+}
+
+function colorSub(source) {
+  source
+    .sub(osc(10, 1, 0.25).modulateScale(noise().scale(5)).rotate(2), ()=>cc[11])
+    .out(o0)
+  render(o0)
 }
 
 function colorSweep(source) {
