@@ -33,7 +33,7 @@ let ASTEROID_PARAMS = [
 let ASTEROID_PARAMS_INDEX = 0
 let LAST_ASTEROID_SETUP = Date.now()
 
-async function generateAsteroidBeltParams(span) {
+function generateAsteroidBeltParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 

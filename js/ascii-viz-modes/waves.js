@@ -1,4 +1,4 @@
-async function generateWavesParams(span) {
+function generateWavesParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 

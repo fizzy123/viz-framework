@@ -8,6 +8,8 @@ let particleBuffers = {
   asteroidBelt: [],
   sun: [], // shared by sun and eclipse modes
   meteor: [],
+  mandala: [],
+  cameras: [],
 };
 let particleConfigs = [{
   limit: 1000,
@@ -34,22 +36,22 @@ const CHARACTER_INTENSITY_ARRAYS = [
   ` .:-=+*#%@`
 ]
 
-let reset = false
+let randomize = false
 let currentPaletteIndex
 let currentBufferIndex = 0
 let CHARSET_ID = 0
 
 let tmpCanvas=document.createElement("canvas");
 
-var tmpCtx=tmpCanvas.getContext("2d", { willReadFrequently: true });
+var tmpCtx=tmpCanvas.getContext("2d");
 
 function getSpanId(spanX, spanY) {
   return spanY * Math.floor(window.innerWidth/CHARACTER_WIDTH) + spanX
 }
 
 function asciiVizInit() {
-  MainLoop.setMaxAllowedFPS(60)
-  let canvasCtx = document.getElementById('ascii').getContext("2d", { willReadFrequently: true });
+//  MainLoop.setMaxAllowedFPS(60)
+  let canvasCtx = document.getElementById('ascii').getContext("2d");
 
   if (MODES[CURRENT_MODE].resetFunc) {
     MODES[CURRENT_MODE].resetFunc()
@@ -86,26 +88,29 @@ function asciiVizInit() {
       spanHeight = y
     }
   }
+  createMandalaParticles()
+  const ascii = document.getElementById("ascii");
+  s12.init({src: ascii})
 }
 
+const pool = workerpool.pool();
 let intensityOn = false
 async function draw() {
-  let canvasCtx = document.getElementById('ascii').getContext("2d", { willReadFrequently: true });
+  let canvasCtx = document.getElementById('ascii').getContext("2d");
   // update particles
   await MODES[CURRENT_MODE].updateParticles()
 
   tmpParamsBuffer = {}
   // render spans
   for (let spanId in charSpans[activeCharSpanId]) {
-      start = Date.now()
       let span = charSpans[activeCharSpanId][spanId]
-      let newParams = await MODES[CURRENT_MODE].generateParams(span);
+      let newParams = MODES[CURRENT_MODE].generateParams(span)
 
       tmpParamsBuffer[spanId] = newParams;
-      if (reset) {
+      if (randomize) {
         newParams = {}
         newParams.color = "#000"
-        newParams.intensity = 0
+        newParams.intensity = Math.random()
       }
 
       // pass on intensity
@@ -143,14 +148,18 @@ async function draw() {
         canvasCtx.fillStyle = newParams.color
         canvasCtx.font = "16px Roboto Mono";
 
-        outputX = span.x * CHARACTER_WIDTH + 3
+        outputX = span.x * CHARACTER_WIDTH + 3 
         outputY = (span.y + 1) * CHARACTER_HEIGHT - 1
+        if (newParams.positionChange) {
+//          outputX = outputX + Math.sin(newParams.charIntensity * Math.PI * 5 ) * 10
+//          outputY = outputY + newParams.charIntensity * 50
+        }
         canvasCtx.fillText(currentCharIntensityArray[spanCharIndex], outputX, outputY)
       }
   }
 //  document.getElementById("fps").innerText = MainLoop.getFPS()
   paramsBuffers[activeCharSpanId] = tmpParamsBuffer
-  reset = false
+  randomize = false
 }
 
 MAX_LIFE = 150
@@ -169,6 +178,10 @@ let MODES = {
     },
     waves: {
       generateParams: generateWavesParams,
+      updateParticles: async () => {},
+    },
+    positional: {
+      generateParams: generatePositionalParams,
       updateParticles: async () => {},
     },
     noise: {
@@ -204,6 +217,18 @@ let MODES = {
       updateParticles: updateMeteorParticles,
       resetFunc: meteorResetFunc,
     },
+    cameras: {
+      generateParams: generateCamerasParams,
+      updateParticles: updateCamerasParticles,
+    },
+    mandala: {
+      generateParams: generateMandalaParams,
+      updateParticles: updateMandalaParticles,
+    },
+    errors: {
+      generateParams: generateErrorsParams,
+      updateParticles: writeErrorWindow,
+    },
   }
 
 function switchPalette() {
@@ -215,26 +240,26 @@ function switchPalette() {
   currentPaletteIndex = Math.floor(Math.random() * COLOR_PALETTES.length)
 }
 
+let oldAsciiMode = ""
 function asciiMode(asciiModeName) {
   return () => {
+    startAsciiViz()
     if (MODES[CURRENT_MODE].resetFunc) {
       MODES[CURRENT_MODE].resetFunc()
     }
-    if (asciiModeName == "eclipse" || asciiModeName == "sun") {
-      reset = true
+    if (asciiModeName == "fungus" && oldAsciiMode !== "fungus") {
+      randomize = true
     }
+    oldAsciiMode = CURRENT_MODE
     CURRENT_MODE = asciiModeName
     switchPalette()
 
-    // init hydra
-    const ascii = document.getElementById("ascii");
-    s0.init({src: ascii})
-
-    return src(s0)
+    return src(s12)
   }
 }
 
 function startAsciiViz() {
+  // init hydra
   MainLoop.setDraw(draw).start();
 }
 

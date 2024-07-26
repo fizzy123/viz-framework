@@ -131,7 +131,7 @@ async function updateNetworkParticles() {
   particleBuffers.network = particles
 }
 
-async function generateNetworkParams(span) {
+function generateNetworkParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 

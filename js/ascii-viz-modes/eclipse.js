@@ -1,4 +1,4 @@
-async function generateEclipseParams(span) {
+function generateEclipseParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 
@@ -51,7 +51,7 @@ async function updateEclipseParticles() {
       })
     }
   }
-  particles = await async.filter(particles, async function(particle) {
+  particles = particles.filter( function(particle) {
     let spanX = Math.round(particle.x / CHARACTER_WIDTH)
     let spanY = Math.round(particle.y / CHARACTER_HEIGHT)
     let spanId = getSpanId(spanX, spanY)

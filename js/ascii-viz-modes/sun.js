@@ -1,5 +1,5 @@
 let SUN_SIZE_FACTOR = 0
-async function generateSunParams(span) {
+function generateSunParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
 
   spanX = span.x * CHARACTER_WIDTH
@@ -29,6 +29,10 @@ async function generateSunParams(span) {
   }
 };
 
+let sunLastReset = Date.now()
 function sunResetFunc() {
-  SUN_SIZE_FACTOR = Math.random() * 200 - 100
+  if ((Date.now() - sunLastReset) > (5 * 1000)) {
+    SUN_SIZE_FACTOR = Math.random() * 200 - 100
+    sunLastReset = Date.now()
+  }
 }

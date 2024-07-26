@@ -10,6 +10,10 @@ const expressions = [
   modulateRepeatNoise,
   modulatePixelateNoise,
   modulateVoronoi,
+  modulateOsc,
+  modulateSelf,
+  modulateFeedback,
+  colorSub,
   colorSweep,
 ]
 
@@ -37,8 +41,8 @@ function scrollExp(source) {
   const randScrollX = Math.random()
   const randScrollY = Math.random()
   source
-    .scrollX(0, ()=>(randScrollX - 0.5))
-    .scrollY(0, ()=>(randScrollY - 0.5))
+    .scrollX(0, ()=>(2 * (randScrollX - 0.5)))
+    .scrollY(0, ()=>(2 * (randScrollY - 0.5)))
     .out(o0)
   render(o0)
 }
@@ -61,14 +65,15 @@ function invertExp(source) {
 
 function modulateNoise(source) {
     source
-      .modulateNoise(noise().scale(2 + Math.random() * 4).scrollX(Math.random()).scrollY(Math.random())
+      .modulate(noise().scale(2 + Math.random() * 4).scrollX(Math.random()).scrollY(Math.random()))
       .out(o0)
     render(o0)
 }
 
+// runs into errors sometimes
 function modulateHue(source) {
     source
-      .modulate(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .modulate(noise().scale(2 + Math.random() * 4).scrollX(Math.random()))
       .out(o0)
     src(o1)
       .modulateHue(src(o1).scale(1.01),10)
@@ -79,14 +84,14 @@ function modulateHue(source) {
 
 function modulateRepeatNoise(source) {
     source
-      .modulateRepeat(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .modulateRepeat(noise().scale(2 + Math.random() * 4).scrollX(Math.random()))
       .out(o0)
     render(o0)
 }
 
 function modulatePixelateNoise(source) {
     source
-      .modulateRepeat(noise().scale(2 + Math.random() * 4).scrollX(Math.random())
+      .modulateRepeat(noise().scale(2 + Math.random() * 4).scrollX(Math.random()))
       .out(o0)
     render(o0)
 }
@@ -98,43 +103,55 @@ function modulateVoronoi(source) {
     render(o0)
 }
 
+// runs into errors
 function modulateSelf(source) {
   source
-    .modulate(source, ()=>Math.random())
+    .modulate(source, 1)
     .out(o0)
   render(o0)
 }
 
 function modulateOsc(source) {
   source
-    .modulate(osc(10, 0.1, 0.5), ()=>Math.random())
+    .modulate(osc(20 * Math.random(), 0.2 * Math.random(), Math.random()))
+    .out(o0)
+  render(o0)
+}
+
+function modulateOscChaos(source) {
+  source
+    .modulate(osc(20 * Math.random(), 0.2 * Math.random(), Math.random()), ()=>Math.random())
     .out(o0)
   render(o0)
 }
 
 function modulateFeedback(source) {
+  const randScrollX = Math.random()
+  const randScrollY = Math.random()
   source
-    .modulate(src(o0).scrollX(0.01).scrollY(0.005), ()=>(Math.random()))
+    .modulate(src(o0).scrollX(randScrollY).scrollY(randScrollX))
     .out(o0)
   render(o0)
 }
 
-function modulateFeedback(source) {
+function modulateFeedbackChaos(source) {
+  const randScrollX = Math.random()
+  const randScrollY = Math.random()
   source
-    .modulate(src(o0).scrollX(0.01).scrollY(0.005), ()=>(Math.random()))
+    .modulate(src(o0).scrollX(randScrollY).scrollY(randScrollX), ()=>Math.random())
     .out(o0)
   render(o0)
 }
 
 function colorSub(source) {
   source
-    .sub(osc(10, 1, 0.25).modulateScale(noise().scale(5)).rotate(2), ()=>cc[11])
+    .sub(osc(10, 1, 0.75).modulateScale(noise().scale(5)).rotate(2))
     .out(o0)
   render(o0)
 }
 
 function colorSweep(source) {
     source.out(o0)
-    osc(10,Math.random(),1).rotate(Math.random()).mask(solid().layer(src(o0))).out(o1)
+    osc(10,Math.random() - 0.5,1).rotate(Math.random()).mask(solid().layer(src(o0))).out(o1)
     render(o1)
 }

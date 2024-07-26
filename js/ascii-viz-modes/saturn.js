@@ -40,7 +40,7 @@ let SATURN_PARAMS = [
 let SATURN_PARAMS_INDEX = 0
 let SATURN_SIZE_FACTOR = 0
 
-async function generateSaturnParams(span) {
+function generateSaturnParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 

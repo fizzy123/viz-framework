@@ -1,4 +1,4 @@
-async function generateShowerParams(span) {
+function generateShowerParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 

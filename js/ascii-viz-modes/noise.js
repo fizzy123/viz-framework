@@ -1,4 +1,4 @@
-async function generateNoiseParams(span) {
+function generateNoiseParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 

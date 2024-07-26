@@ -43,7 +43,7 @@ let METEOR_PARAMS = [
 let METEOR_SETTING_INDEX = 0
 let METEOR_WIDTH_FACTOR = 0
 
-async function generateMeteorParams(span) {
+function generateMeteorParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
 
   let intensity = 0
@@ -145,10 +145,15 @@ async function updateMeteorParticles() {
   particleBuffers.meteor = particles
 }
 
+
+let meteorLastReset = Date.now()
 function meteorResetFunc() {
-  METEOR_SETTING_INDEX = Math.floor(METEOR_PARAMS.length * Math.random())
-  if (METEOR_SETTING_INDEX > METEOR_PARAMS.length - 1) {
-    METEOR_SETTING_INDEX = METEOR_PARAMS.length - 1
+  if ((Date.now() - meteorLastReset) > (10 * 1000)) {
+    METEOR_SETTING_INDEX = Math.floor(METEOR_PARAMS.length * Math.random())
+    if (METEOR_SETTING_INDEX > METEOR_PARAMS.length - 1) {
+      METEOR_SETTING_INDEX = METEOR_PARAMS.length - 1
+    }
+    METEOR_WIDTH_FACTOR = 4 * Math.random()
+    meteorLastReset = Date.now()
   }
-  METEOR_WIDTH_FACTOR = 4 * Math.random()
 }

@@ -1,4 +1,4 @@
-async function generateFungusParams(span) {
+function generateFungusParams(span) {
   let colorPalette = COLOR_PALETTES[currentPaletteIndex]
   let intensity = 0
 
