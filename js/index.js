@@ -14,26 +14,26 @@ function setupHydraSources() {
     canvas: document.getElementById("hydra"),
     numSources: 16,
   })
+  s3.initCam()
 }
 
 const SETLIST = [
-  { // intro
+  { 
     sources: [{
-      source: kkbTitle, // movie style title card for override
-      resetFunc: kkbTitleReset,
+      source: imageWrapper(1),
+      resetFunc: imageResetWrapper(["http://localhost:8000/images/cc/poster_opaque.png"]),
       expressions: [
         noOpExp,
       ]
     }]
   },
-  { // kero kero bonito
+  { 
     sources: [{
-      source: kkbTitle, // movie style title card for override
-      resetFunc: kkbTitleReset,
+      source: videoCalibration,
+      resetFunc: videoCalibrationReset,
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -42,40 +42,15 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // thique
-    sources: [{
-      source: asciiMode("eclipse"), 
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
       ]
     },{
-      source: thiqueWords, // words
-      resetFunc: thiqueWordsReset,
+      source: imageWrapper(2),
+      resetFunc: imageResetWrapper(["http://localhost:8000/images/cc/poster.png","http://localhost:8000/images/cc/poster_opaque.png"]),
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -84,105 +59,18 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
       ]
-    }]
+    }],
+    backgrounds: [webcam],
   },
-  { // one two step
-    sources: [{
-      source: asciiMode("mandala"), // ascii movement 
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    },{
-      source: oneTwoStepWords, // words
-      resetFunc: oneTwoStepWordsReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // poppers
-    sources: [{
-      source: logoPaint, // paint
-      resetFunc: logoPaintReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    },{
-      source: poppers, // poppers
-      resetFunc: poppersReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // have mercy
+  {
     sources: [{
       source: asciiMode("shower"),
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -191,17 +79,15 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
       ]
     },{
-      source: asciiMode("meteor"),
+      source: imageWrapper(2),
+      resetFunc: imageResetWrapper(["http://localhost:8000/images/cc/wide.png","http://localhost:8000/images/cc/wide_alt.png"]),
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -210,20 +96,18 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
       ]
-    }]
+    }],
+    backgrounds: [webcam],
   },
-  { // alright
+  { 
     sources: [{
       source: asciiMode("fungus"),
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -232,18 +116,15 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
       ]
     },{
-      source: setlist, // setlist
-      resetFunc: setlistReset,
+      source: imageWrapper(2),
+      resetFunc: imageResetWrapper(["http://localhost:8000/images/cc/big.png","http://localhost:8000/images/cc/big_alt.png"]),
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -252,279 +133,19 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
       ]
-    }]
+    }],
+    backgrounds: [webcam],
   },
-  { // thot shit
+  { 
     sources: [{
-      source: grindr, // scrolling grinder 
-      resetFunc: grindrReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // lose control
-    sources: [{
-      source: asciiMode("errors"), // expanding error windows
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // asap
-    sources: [{
-      source: glitchAsapWords, // glitch distort
-      resetFunc: glitchAsapWordsReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    },{
-      source: asapWords, // words
-      resetFunc: asapWordsReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // bitch better have my money
-    sources: [{
-      source: asciiMode("waves"),
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    },{
-      source: bitchBetterHaveMyMoneyWords, // words
-      resetFunc: bitchBetterHaveMyMoneyWordsReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // call ticketron
-    sources: [{
-      source: callTicketronTickets, // flyer/ticket override layout
-      resetFunc: callTicketronTicketsReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // lord forgive me
-    sources: [{
-      source: droste,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    },{
-      source: lordForgiveMeWords, // words
-      resetFunc: lordForgiveMeWordsReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // whistle
-    sources: [{
-      source: psychWaves,
-      resetFunc: psychWavesReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    },{
-      source: whistleProducts,
-      resetFunc: whistleProductsReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // 1997 diana
-    sources: [{
-      source: videoCalibration, // video/signal calibration graphics
-      resetFunc: videoCalibrationReset,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    },{
       source: scrollLogo, // logo scan
       resetFunc: scrollLogoReset,
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -533,21 +154,15 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
       ]
-    }]
-  },
-  { // phenomenal
-    sources: [{
-      source: phenomenalCover, // art magazine style override layout
-      resetFunc: phenomenalCoverReset,
+    },
+    {
+      source: asciiMode("meteor"),
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -556,18 +171,35 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
+        colorSub,
+        colorSweep,
+      ]
+    }],
+    backgrounds: [webcam],
+  },
+  { 
+    sources: [{
+      source: asciiMode("waves"),
+      expressions: [
+        noOpExp,
+        blackExp,
+        scrollExp,
+        invertExp,
+        modulateNoise,
+        modulateRepeatNoise,
+        modulatePixelateNoise,
+        modulateVoronoi,
+        modulateOsc,
+        modulateFeedback,
         colorSub,
         colorSweep,
       ]
     },{
-      source: phenomenalWords, // words
-      resetFunc: phenomenalWordsReset,
+      source: imageWrapper(2),
+      resetFunc: imageResetWrapper(["http://localhost:8000/images/cc/poster2.png","http://localhost:8000/images/cc/poster2_alt.png"]),
       expressions: [
         noOpExp,
         blackExp,
-        strobeExp,
         scrollExp,
         invertExp,
         modulateNoise,
@@ -576,85 +208,57 @@ const SETLIST = [
         modulateVoronoi,
         modulateOsc,
         modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
         colorSub,
         colorSweep,
+      ]
+    }],
+    backgrounds: [webcam],
+  },
+  { 
+    sources: [{
+      source: asciiMode("eclipse"),
+      expressions: [
+        noOpExp,
+        blackExp,
+        scrollExp,
+        invertExp,
+        modulateNoise,
+        modulateRepeatNoise,
+        modulatePixelateNoise,
+        modulateVoronoi,
+        modulateOsc,
+        modulateFeedback,
+        colorSub,
+        colorSweep,
+      ]
+    },{
+      source: imageWrapper(2),
+      resetFunc: imageResetWrapper(["http://localhost:8000/images/cc/wide2.png","http://localhost:8000/images/cc/wide2_alt.png"]),
+      expressions: [
+        noOpExp,
+        blackExp,
+        scrollExp,
+        invertExp,
+        modulateNoise,
+        modulateRepeatNoise,
+        modulatePixelateNoise,
+        modulateVoronoi,
+        modulateOsc,
+        modulateFeedback,
+        colorSub,
+        colorSweep,
+      ]
+    }],
+    backgrounds: [webcam],
+  },
+  { 
+    sources: [{
+      source: blank,
+      expressions: [
+        noOpExp,
       ]
     }]
   },
-  { // welcome to my island
-    sources: [{
-      source: abletonDistort,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }, {
-      source: cmdDistort,
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // click
-    sources: [{
-      source: asciiMode("cameras"), // audience/self cam
-      expressions: [
-        noOpExp,
-        blackExp,
-        strobeExp,
-        scrollExp,
-        invertExp,
-        modulateNoise,
-        modulateRepeatNoise,
-        modulatePixelateNoise,
-        modulateVoronoi,
-        modulateOsc,
-        modulateFeedback,
-        modulateOscChaos,
-        modulateFeedbackChaos,
-        colorSub,
-        colorSweep,
-      ]
-    }]
-  },
-  { // ending
-    sources: [{
-      source: kkbTitle, // movie style title card for override
-      resetFunc: kkbTitleReset,
-      expressions: [
-        noOpExp,
-      ]
-    }]
-  }
 ]
 
 const pulseOptions = [
@@ -672,24 +276,36 @@ function solidPulse() {
 
 let lastExpression = null
 let playedHighSourceLast = false
-localStorage.SET_INDEX = "9"
+localStorage.SET_INDEX = "0"
 localStorage.log = "false"
 function startNewExpression() {
   stopAsciiViz()
   // flash as we switch to a new thing
-  randomChoice(pulseOptions)()
+//  randomChoice(pulseOptions)()
   setTimeout(function() {
     // get random source
     sourceInfo = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources)
-    // get random expression of source
-    let newExpression = randomChoice(sourceInfo.expressions)
-    if (localStorage.log == "true") {
-      console.log(sourceInfo.source)
-      console.log(newExpression)
-    }
+    // don't do anything if it's an empty source
+    if (sourceInfo) {
+      // get random expression of source
+      let newExpression = randomChoice(sourceInfo.expressions)
+      if (localStorage.log == "true") {
+        console.log(sourceInfo.source)
+        console.log(newExpression)
+      }
 
-    newExpression(sourceInfo.source())
-  }, 20)
+      if (SETLIST[parseInt(localStorage.SET_INDEX)].backgrounds) {
+        background = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].backgrounds)()
+        output = newExpression(sourceInfo.source())
+        background.layer(src(output)).out(o3)
+
+        render(o3)
+      } else {
+        output = newExpression(sourceInfo.source())
+        render(output)
+      }
+    }
+  }, 0)
 }
 
 document.documentElement.style.cursor = 'none';
@@ -712,19 +328,13 @@ function initAbleton() {
 //        console.log(e.note.octave)
         // octave is 1 higher than what is shown in ableton
         // this note means that we show a different expression
-        if (e.note.name === "E" && e.note.octave === 4) {
+        if (e.note.name === "E" && e.note.octave === 4 ) {
           startNewExpression()
         }
 
         // this note means that we move onto the next song in the set and show a different expression
         if (e.note.name === "A" && e.note.octave === 4) {
-          localStorage.SET_INDEX = parseInt(localStorage.SET_INDEX) + 1
-          for (let source of SETLIST[parseInt(localStorage.SET_INDEX)].sources) {
-            if (source.resetFunc) {
-              source.resetFunc()
-            }
-          }
-          startNewExpression()
+          nextVisual()
         }
       })
     } else {
@@ -737,4 +347,15 @@ function initAbleton() {
     }
     startNewExpression()
   })
+}
+
+function nextVisual() {
+  localStorage.SET_INDEX = (parseInt(localStorage.SET_INDEX) + 1) % SETLIST.length
+  console.log(SETLIST.length)
+  for (let source of SETLIST[parseInt(localStorage.SET_INDEX)].sources) {
+    if (source.resetFunc) {
+      source.resetFunc()
+    }
+  }
+  startNewExpression()
 }
