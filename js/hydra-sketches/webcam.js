@@ -1,3 +1,5 @@
-function webcam() {
-  return src(s3)
+class WebcamSrc {
+  render() {
+    return src(s3)
+  }
 }

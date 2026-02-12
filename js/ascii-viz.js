@@ -50,7 +50,7 @@ function getSpanId(spanX, spanY) {
 }
 
 function asciiVizInit() {
-//  MainLoop.setMaxAllowedFPS(60)
+  MainLoop.setMaxAllowedFPS(60)
   let canvasCtx = document.getElementById('ascii').getContext("2d");
 
   if (MODES[CURRENT_MODE].resetFunc) {
@@ -90,7 +90,7 @@ function asciiVizInit() {
   }
   createMandalaParticles()
   const ascii = document.getElementById("ascii");
-  s12.init({src: ascii})
+  s2.init({src: ascii})
 }
 
 const pool = workerpool.pool();
@@ -242,20 +242,7 @@ function switchPalette() {
 
 let oldAsciiMode = ""
 function asciiMode(asciiModeName) {
-  return () => {
-    startAsciiViz()
-    if (MODES[CURRENT_MODE].resetFunc) {
-      MODES[CURRENT_MODE].resetFunc()
-    }
-    if (asciiModeName == "fungus" && oldAsciiMode !== "fungus") {
-      randomize = true
-    }
-    oldAsciiMode = CURRENT_MODE
-    CURRENT_MODE = asciiModeName
-    switchPalette()
 
-    return src(s12)
-  }
 }
 
 function startAsciiViz() {
@@ -267,3 +254,27 @@ function stopAsciiViz() {
   MainLoop.stop();
 }
 
+class AsciiVizSrc {
+  constructor (modeName, expressions = noStrobeExpressions) {
+    this.modeName = modeName
+    this.expressions = expressions
+  }
+  render(){
+    startAsciiViz()
+    if (MODES[CURRENT_MODE].resetFunc) {
+      MODES[CURRENT_MODE].resetFunc()
+    }
+    if (this.modeName == "fungus" && oldAsciiMode !== "fungus") {
+      randomize = true
+    }
+    oldAsciiMode = CURRENT_MODE
+    CURRENT_MODE = this.modeName
+    switchPalette()
+
+    return src(s2)
+  }
+
+  keyColor() {
+    return {r:0,g:0,b:0}
+  }
+}

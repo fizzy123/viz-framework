@@ -1,17 +1,24 @@
-function imageResetWrapper(images) {
-  return () => {
-    SOURCE_ARRAY = [s0, s1, s2]
-    for (let i=0;i<images.length;i++) {
-      SOURCE_ARRAY[i].initImage(images[i])
-    }
+const DEFAULT_CHROMA_COLORS = [
+  {r:0,b:0,g:0},
+  {r:1,b:1,g:1},
+]
+class ImageSrc {
+  constructor(image, source, chromaColors = DEFAULT_CHROMA_COLORS, expressions = noStrobeExpressions) {
+    this.image = image
+    this.chromaColors = chromaColors
+    this.expressions = expressions
+    this.source = source
   }
-}
 
-// TODO: these functions should be methods of an object
-function imageWrapper(imageCount) {
-  return () => {
-    SOURCE_ARRAY = [s0, s1, s2]
-    let srcBuf = randomChoice(SOURCE_ARRAY.slice(0, imageCount))
-    return src(srcBuf)
+  reset() {
+    this.source.initImage(this.image)
+  }
+
+  render() {
+    return src(this.source)
+  }
+
+  keyColor() {
+    return randomChoice(this.chromaColors)
   }
 }

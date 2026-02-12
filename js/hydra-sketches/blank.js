@@ -1,3 +1,5 @@
-function blank() {
-  return solid(0,0,0)
+class BlankSrc {
+  render() {
+    return solid(0,0,0)
+  }
 }
