@@ -21,7 +21,7 @@ const expressions = [
 ]
 
 const noStrobeExpressions = [
-  noOpExp,
+  scrollExp,
   kaleidExp,
   invertExp,
   modulateNoise,
@@ -59,8 +59,8 @@ function scrollExp(source) {
   const randScrollX = Math.random()
   const randScrollY = Math.random()
   return source
-    .scrollX(0, ()=>(2 * (randScrollX - 0.5)))
-    .scrollY(0, ()=>(2 * (randScrollY - 0.5)))
+    .scrollX(0, ()=>((randScrollX - 0.5)))
+    .scrollY(0, ()=>((randScrollY - 0.5)))
 }
 
 function kaleidExp(source) {
@@ -72,7 +72,12 @@ function kaleidExp(source) {
 }
 
 function invertExp(source) {
-  return source.invert()
+  const randScrollX = Math.random()
+  const randScrollY = Math.random()
+  return source
+    .invert()
+    .scrollX(0, ()=>((randScrollX - 0.5)))
+    .scrollY(0, ()=>((randScrollY - 0.5)))
 }
 
 function modulateGen(source) {
@@ -208,6 +213,22 @@ function intense(source) {
   return source.brightness(() => intensity * 2 * (Math.random() * 0.3 - 0.2))
     .scrollX(() => intensity * 4 * ((Math.random() * 0.004) - 0.002))
     .scrollY(() => intensity * 4 * ((Math.random() * 0.004) - 0.002))
+}
+
+// timing in milliseconds
+function intenseBuild(timing) {
+  intense = (source) => {
+    let start = Date.now()
+    let end = start + timing
+    let intensity = () => {
+      now = Date.now()
+      return (now - start) / (end - start)
+    }
+    return source.brightness(() => intensity() * 2 * (Math.random() * 0.3 - 0.2))
+      .scrollX(() => intensity() * 4 * ((Math.random() * 0.004) - 0.002))
+      .scrollY(() => intensity() * 4 * ((Math.random() * 0.004) - 0.002))
+  }
+  return intense
 }
 
 function modulateRotate(source) {

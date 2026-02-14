@@ -1,6 +1,7 @@
 class ScrollLogoSrc {
-  constructor(expressions = noStrobeExpressions) {
+  constructor(expressions = noStrobeExpressions, weight = 1) {
     this.expressions = expressions
+    this.weight = 1
   }
 
   reset() {

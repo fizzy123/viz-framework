@@ -255,9 +255,10 @@ function stopAsciiViz() {
 }
 
 class AsciiVizSrc {
-  constructor (modeName, expressions = noStrobeExpressions) {
+  constructor (modeName, expressions = noStrobeExpressions, weight = 1) {
     this.modeName = modeName
     this.expressions = expressions
+    this.weight = 1
   }
   render(){
     startAsciiViz()

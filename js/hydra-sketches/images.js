@@ -19,6 +19,10 @@ class ImageSrc {
   }
 
   keyColor() {
-    return randomChoice(this.chromaColors)
+    if (this.chromaColors.length != 0) {
+      return randomChoice(this.chromaColors)
+    } else {
+      return null
+    }
   }
 }
