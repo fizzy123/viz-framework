@@ -172,7 +172,9 @@ let playedHighSourceLast = false
 localStorage.SET_INDEX = "2"
 localStorage.log = "false"
 function startNewExpression() {
+  let start = Date.now()
   stopAsciiViz()
+  console.log("stopped ascii viz", Date.now() - start)
   // get random source
   source = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources)
   
@@ -192,12 +194,15 @@ function startNewExpression() {
   } else {
     output = expRender(source)
   }
+  console.log("exprender", Date.now() - start)
 
   if (Math.random() < 0) {
     output = randomChoice(IMPULSES)(output)
   }
   output.out(o3)
+  console.log("output.out", Date.now() - start)
   render(o3)
+  console.log("render", Date.now() - start)
 }
 
 function expRender(source) {
@@ -217,7 +222,7 @@ let CURRENT_BEAT = 0
 function initAbleton() {
   WebMidi.enable(function(err) {
     if (err) throw err;
-    const busInput = WebMidi.getInputByName('LoopBe Internal MIDI')
+    const busInput = WebMidi.getInputByName('IAC Driver Bus 1')
       WebMidi.inputs.forEach(input => console.log(input.manufacturer, input.name));
 
     if (busInput) {
