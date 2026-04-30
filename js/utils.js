@@ -146,7 +146,7 @@ let randomChoice = (array) => {
       return array[i].value || array[i];
     }
   }
-  return array[i].value || array[i];
+  return (array[i] && array[i].value) || array[i];
 }
 
 let intensitySplit = (intensity) => {

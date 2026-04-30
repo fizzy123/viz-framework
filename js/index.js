@@ -169,7 +169,7 @@ IMPULSES = [
 
 let lastExpression = null
 let playedHighSourceLast = false
-localStorage.SET_INDEX = "2"
+localStorage.SET_INDEX = "8"
 localStorage.log = "false"
 function startNewExpression() {
   let start = Date.now()
@@ -255,6 +255,9 @@ function initAbleton() {
     } else {
       console.log("ableton bus input not enabled")
     }
+    window.addEventListener("click", (e) => {
+      startNewExpression()
+    });
     resetSources()
     startNewExpression()
   })
