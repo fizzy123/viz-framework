@@ -169,7 +169,7 @@ IMPULSES = [
 
 let lastExpression = null
 let playedHighSourceLast = false
-localStorage.SET_INDEX = "8"
+localStorage.SET_INDEX = "1"
 localStorage.log = "false"
 function startNewExpression() {
   let start = Date.now()
