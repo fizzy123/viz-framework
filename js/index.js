@@ -19,13 +19,17 @@ let SETLIST = []
 
 function setupHydraSources() {
   const canvas = document.getElementById("hydra");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.style.width = window.innerWidth;
+  canvas.style.height = window.innerHeight;
+  canvas.width = 1920
+  canvas.height = 1080
   // create a new hydra-synth instance
   let hydra = new Hydra({
     detectAudio: false,
-    canvas: document.getElementById("hydra"),
+    canvas: canvas,
     numSources: 17,
+    numOutputs: 5,
+    precision: 'highp',
   })
   s4.initScreen()
 //  s5.initCam()
@@ -48,7 +52,7 @@ function setupHydraSources() {
     },
     { // 3 - poppers
       sources: [
-        new AsciiVizSrc("network", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new AsciiVizSrc("fungus", noStrobeExpressions.concat([repeat, repeat3d]), 8),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
@@ -62,7 +66,7 @@ function setupHydraSources() {
     },
     { // 5 - phenomenal
       sources: [
-        new AsciiVizSrc("mandala", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new AsciiVizSrc("eclipse", noStrobeExpressions.concat([repeat, repeat3d]), 8),
         new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
@@ -76,7 +80,7 @@ function setupHydraSources() {
     },
     { // 7 - thot shit
       sources: [
-        new AsciiVizSrc("network", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new AsciiVizSrc("waves", noStrobeExpressions.concat([repeat, repeat3d]), 8),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
@@ -111,7 +115,7 @@ function setupHydraSources() {
     },
     { // 12 - whistle
       sources: [
-        new AsciiVizSrc("mandala", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new AsciiVizSrc("shower", noStrobeExpressions.concat([repeat, repeat3d]), 8),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
@@ -195,8 +199,15 @@ let lastExpression = null
 let playedHighSourceLast = false
 localStorage.SET_INDEX = "0"
 localStorage.log = "false"
+O3_CURRENT = true
 function startNewExpression() {
   let start = Date.now()
+  if (O3_CURRENT) {
+    render(o3)
+  } else {
+    render(o4)
+  }
+  console.log("render", Date.now() - start)
   stopAsciiViz()
   console.log("stopped ascii viz", Date.now() - start)
   // get random source
@@ -218,15 +229,19 @@ function startNewExpression() {
   } else {
     output = expRender(source)
   }
-  console.log("exprender", Date.now() - start)
 
   if (Math.random() < 0) {
     output = randomChoice(IMPULSES)(output)
   }
-  output.out(o3)
+  console.log("exprender", Date.now() - start)
+  if (O3_CURRENT) {
+    output.out(o4)
+  } else {
+    output.out(o3)
+  }
+  O3_CURRENT = !O3_CURRENT
   console.log("output.out", Date.now() - start)
-  render(o3)
-  console.log("render", Date.now() - start)
+
 }
 
 function expRender(source) {
