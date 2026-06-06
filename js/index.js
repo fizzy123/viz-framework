@@ -279,6 +279,9 @@ function initAbleton() {
     } else {
       console.log("ableton bus input not enabled")
     }
+    window.addEventListener("click", (e) => {
+      startNewExpression()
+    });
     resetSources()
     startNewExpression()
   })

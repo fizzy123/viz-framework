@@ -181,7 +181,7 @@ function modulateFeedback(source) {
   const randScrollX = Math.random()
   const randScrollY = Math.random()
   source
-    .modulate(src(o0).scrollX(randScrollY).scrollY(randScrollX), Math.random())
+    .modulate(src(o0).scrollX(0, randScrollY).scrollY(0, randScrollX), Math.random())
     .out(o0)
   return src(o0)
 }
@@ -234,7 +234,7 @@ function intenseBuild(timing) {
 function modulateRotate(source) {
   let intensity = Math.random()
   source.out(o0)
-  source.modulateRotate(o0, intensity)
+  source.modulateRotate(src(o0).scrollX(0, (Math.random() - 0.5) * 0.1).scrollY(0, (Math.random() - 0.5) * 0.1), intensity)
       .out(o1)
   return src(o1)
 }
@@ -242,7 +242,7 @@ function modulateRotate(source) {
 function feedback(source) {
   let intensity = Math.random()
   source.out(o0)
-  src(o0).modulate(src(o1).scrollX((Math.random() - 0.5) * 0.01).scrollY((Math.random() - 0.5) * 0.01), intensity)
+  src(o0).modulate(src(o1).scrollX(0, (Math.random() - 0.5) * 0.1).scrollY(0, (Math.random() - 0.5) * 0.1), intensity)
       .out(o1)
   return src(o1)
 }
@@ -250,7 +250,7 @@ function feedback(source) {
 function selfModulate(source) {
   let intensity = Math.random()
   source.out(o0)
-  source.modulate(src(o0).scrollX((Math.random() - 0.5) * 0.01).scrollY((Math.random() - 0.5) * 0.01), intensity)
+  source.modulate(src(o0).scrollX(0, (Math.random() - 0.5) * 0.1).scrollY(0, (Math.random() - 0.5) * 0.1), intensity)
       .out(o1)
   return src(o1)
 }
