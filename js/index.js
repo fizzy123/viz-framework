@@ -31,12 +31,7 @@ function setupHydraSources() {
 //  s5.initCam()
 
   SETLIST = [
-    { // 1 - blank
-      sources: [
-        new BlankSrc(),
-      ],
-    },
-    { // 2 - logo with ops
+    { // 1 - before music
       sources: [
         new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
@@ -44,87 +39,116 @@ function setupHydraSources() {
         new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 3 - before music
+    { // 2 - thique
       sources: [
-        new ImageSrc("http://localhost:8000/images/video_calibration.png", s8, [], [noOpExp] ),
+        new AsciiVizSrc("eclipse", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 4 - official intro
+    { // 3 - poppers
       sources: [
-        new ImageSrc("http://localhost:8000/images/video_calibration.png", s8, [], [intenseBuild(80 * 1000)] ),
+        new AsciiVizSrc("network", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 5 - official outro
+    { // 4 - bitch better have my money
       sources: [
-        new AsciiVizSrc("eclipse", [intenseBuild(80 * 1000)]),
+        new AsciiVizSrc("waves", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 6 - forever
+    { // 5 - phenomenal
+      sources: [
+        new AsciiVizSrc("mandala", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 6 - alright
+      sources: [
+        new AsciiVizSrc("fungus", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 7 - thot shit
+      sources: [
+        new AsciiVizSrc("network", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 8 - 1997 diana
+      sources: [
+        new ScrollLogoSrc(),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 9 - call ticketron
+      sources: [
+        new ImageSrc("http://localhost:8000/images/video_calibration.png", s8, [], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s9, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 10 - asap
       sources: [
         new AsciiVizSrc("shower", noStrobeExpressions.concat([repeat, repeat3d]), 8),
         new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 7 - you in january
+    { // 11 - lose control
       sources: [
-        new AsciiVizSrc("asteroidBelt", [noOpExp]),
-      ],
-    },
-    { // 8 - kissing u
-      sources: [
-        new ScrollLogoSrc(noStrobeExpressions, 8),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new AsciiVizSrc("waves", noStrobeExpressions.concat([repeat, repeat3d]), 8),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 12 - whistle
+      sources: [
+        new AsciiVizSrc("mandala", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 9 - birds of a feather pre-chorus
+    { // 13 - battle theme
       sources: [
-        new AsciiVizSrc("fungus", [noOpExp]),
+        new AsciiVizSrc("eclipse", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 10 - birds of a feather chorus
+    { // 14 - lalala
+      sources: [
+        new AsciiVizSrc("shower", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 15 - oh yeah
+      sources: [
+        new AsciiVizSrc("meteor", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
+      ],
+    },
+    { // 16 - next level charli
       sources: [
         new AsciiVizSrc("fungus", noStrobeExpressions.concat([repeat, repeat3d]), 8),
         new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
-    { // 11 - things i never nu
+    { // 17 - booboo
       sources: [
-        new AsciiVizSrc("meteor", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new AsciiVizSrc("waves", noStrobeExpressions.concat([repeat, repeat3d]), 8),
+        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
         new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
-      ],
-    },
-    { // 12 - ending
-      sources: [
-        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [], [noOpExp]),
-      ],
-    },
-    { // 13 - logo without exp
-      sources: [
-        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], [noOpExp]),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], [noOpExp] ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, [noOpExp] ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, [noOpExp] ),
-      ],
-    },
-    { // 14 - official outro
-      sources: [
-        new AsciiVizSrc("eclipse", [intenseBuild(80 * 1000)], 8),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/big.png", s8, [{r:0,g:0,b:0}, {r:212,g:212,b:212}], noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster1.png", s9, [{r:13,g:13,b:13}, {r:255,g:255,b:255}], noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/poster2.png", s10, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
-        new ImageSrc("http://localhost:8000/images/nobelyoo/wide1.png", s11, DEFAULT_CHROMA_COLORS, noStrobeExpressions.concat([repeat, repeat3d]) ),
       ],
     },
   ]
@@ -169,7 +193,7 @@ IMPULSES = [
 
 let lastExpression = null
 let playedHighSourceLast = false
-localStorage.SET_INDEX = "2"
+localStorage.SET_INDEX = "0"
 localStorage.log = "false"
 function startNewExpression() {
   let start = Date.now()
@@ -247,7 +271,7 @@ function initAbleton() {
         // octave = 4 shows as octave 3 in ableton
         // octave = 4 is also for valentines day show. kicks are usually on octave 3
         if (e.note.name === "C" && e.note.octave === 4 && e.type == "noteon" && e.note.accidental == undefined) {
-          nextVisual(e.rawVelocity - 1)
+          nextVisual(e.rawVelocity)
         } else {
           startNewExpression()
         }
