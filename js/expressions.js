@@ -187,10 +187,8 @@ function modulateFeedback(source) {
 }
 
 function colorSub(source) {
-  source
+  return source
     .diff(osc(10 * Math.random(), Math.random(), 0.75).modulateScale(noise().scale(4 + 2 * Math.random())).rotate(2 * Math.random()))
-    .out(o0)
-  return src(o0)
 }
 
 function colorSweep(source) {
@@ -256,8 +254,7 @@ function selfModulate(source) {
 }
 
 function dither(source) {
-  source.dither4().out(o0)
-  return src(o0)
+  return source.dither4()
 }
 
 function repeat(source, chromaKey) {

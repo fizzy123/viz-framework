@@ -32,7 +32,7 @@ class ScrollLogoSrc {
   		.modulate(osc(10)
   			.rotate(Math.PI / 2)
   			.colorama(4))).brightness(-0.2).contrast(1.1))
-    .out(o2)
-    return src(o2)
+    .out(o0)
+    return src(o0)
   }
 }

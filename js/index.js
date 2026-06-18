@@ -199,15 +199,9 @@ let lastExpression = null
 let playedHighSourceLast = false
 localStorage.SET_INDEX = "0"
 localStorage.log = "false"
-O3_CURRENT = true
 function startNewExpression() {
   let start = Date.now()
-  if (O3_CURRENT) {
-    render(o3)
-  } else {
-    render(o4)
-  }
-  console.log("render", Date.now() - start)
+
   stopAsciiViz()
   console.log("stopped ascii viz", Date.now() - start)
   // get random source
@@ -234,14 +228,10 @@ function startNewExpression() {
     output = randomChoice(IMPULSES)(output)
   }
   console.log("exprender", Date.now() - start)
-  if (O3_CURRENT) {
-    output.out(o4)
-  } else {
-    output.out(o3)
-  }
-  O3_CURRENT = !O3_CURRENT
+  output.out(o3)
   console.log("output.out", Date.now() - start)
-
+  render(o3)
+  console.log("render", Date.now() - start)
 }
 
 function expRender(source) {
@@ -274,14 +264,6 @@ function initAbleton() {
         }
         //console.log(e.note.name)
         //console.log(e.note.octave)
-        // octave is 1 higher than what is shown in ableton
-        // this note means that we show a different expression
-        //        if (e.note.name === "E" && e.note.octave === 4 ) {
-        //          startNewExpression()
-        //        }
-
-        // this note means that we move onto the next song in the set and show a different expression
-        //        if (e.note.name === "A" && e.note.octave === 4) {
         console.log(e)
         // octave = 4 shows as octave 3 in ableton
         // octave = 4 is also for valentines day show. kicks are usually on octave 3

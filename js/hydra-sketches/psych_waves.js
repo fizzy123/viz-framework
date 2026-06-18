@@ -6,8 +6,8 @@ function psychWavesReset() {
 			.modulateScale(noise())
 			.colorama(0.1, 1))
   .invert()
-  .out(o2)
+  .out(o0)
 }
 function psychWaves() {
-  return src(o2)
+  return src(o0)
 }
