@@ -199,6 +199,7 @@ let lastExpression = null
 let playedHighSourceLast = false
 localStorage.SET_INDEX = "0"
 localStorage.log = "false"
+let CHROMA_COLOR = {}
 function startNewExpression() {
   let start = Date.now()
 
@@ -213,9 +214,12 @@ function startNewExpression() {
     // get another source to be background
     bgSrc = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources.concat([new PIPSrc()]))
     let keyColor = source.keyColor()
+    CHROMA_COLOR.r = keyColor.r
+    CHROMA_COLOR.g = keyColor.g
+    CHROMA_COLOR.b = keyColor.b
     if (keyColor) {
       output = expRender(bgSrc).layer(
-        expRender(source).chroma(keyColor.r,keyColor.g,keyColor.b)
+        expRender(source).chroma(()=>CHROMA_COLOR.r,()=>CHROMA_COLOR.g,()=>CHROMA_COLOR.b)
       )
     } else {
       output = expRender(source)

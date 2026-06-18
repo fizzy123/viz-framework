@@ -3,13 +3,7 @@ const expressions = [
   strobeExp,
   kaleidExp,
   invertExp,
-  modulateNoise,
   modulateHue,
-  modulateRepeatNoise,
-  modulatePixelateNoise,
-  modulateScaleNoise,
-  modulateVoronoi,
-  modulateOsc,
   modulateFeedback,
   modulateGen,
   colorSub,
@@ -24,12 +18,7 @@ const noStrobeExpressions = [
   scrollExp,
   kaleidExp,
   invertExp,
-  modulateNoise,
   modulateHue,
-  modulateRepeatNoise,
-  modulatePixelateNoise,
-  modulateVoronoi,
-  modulateOsc,
   modulateFeedback,
   modulateGen,
   colorSub,
@@ -82,14 +71,20 @@ function invertExp(source) {
 
 function modulateGen(source) {
   sources = [noise, osc, voronoi]
+  randInnerChain1Scale = 2 + Math.random() * 4
+  randInnerChain1ScrollX = 0.5 * Math.random()
+  randInnerChain1Rotate = Math.random() * 3.14
   innerChain1 = randomChoice(sources)()
-    .scale(2 + Math.random() * 4)
-    .scrollX(Math.random(), 0.5 * Math.random())
-    .rotate(Math.random() * 3.14)
+    .scale(()=>randInnerChain1Scale)
+    .scrollX(0, ()=>randInnerChain1ScrollX)
+    .rotate(()=>randInnerChain1Rotate)
+  randInnerChain2Scale = 2 + Math.random() * 4
+  randInnerChain2ScrollX = 0.5 * Math.random()
+  randInnerChain2Rotate = Math.random() * 3.14
   innerChain2 = randomChoice(sources)()
-    .scale(2 + Math.random() * 4)
-    .scrollX(Math.random(), 0.5 * Math.random())
-    .rotate(Math.random() * 3.14)
+    .scale(()=>randInnerChain1Scale)
+    .scrollX(0, ()=>randInnerChain1ScrollX)
+    .rotate(()=>randInnerChain1Rotate)
   let modChoice1 = Math.floor(Math.random() * 4)
   if (modChoice1 == 0) {
     innerChain3 = innerChain1.modulate(innerChain2)
@@ -98,7 +93,9 @@ function modulateGen(source) {
   } else if (modChoice1 == 2) {
     innerChain3 = innerChain1.modulateScale(innerChain2)
   } else if (modChoice1 == 3) {
-    innerChain3 = innerChain1.modulatePixelate(innerChain2, Math.random() * 20, Math.random() * 100)
+    pixelateMod1Param1 = Math.random() * 20
+    pixelateMod1Param2 = Math.random() * 100
+    innerChain3 = innerChain1.modulatePixelate(innerChain2, ()=>pixelateMod1Param1, ()=>pixelateMod1Param2)
   }
 
   let modChoice2 = Math.floor(Math.random() * 4)
@@ -109,100 +106,46 @@ function modulateGen(source) {
   } else if (modChoice2 == 2) {
     return source.modulateScale(innerChain3)
   } else if (modChoice2 == 3) {
-    return source.modulateScale(innerChain3, Math.random() * 20, Math.random() * 100)
+    pixelateMod2Param1 = Math.random() * 20
+    pixelateMod2Param2 = Math.random() * 100
+    return source.modulateScale(innerChain3, ()=>pixelateMod2Param1, ()=>pixelateMod2Param2)
   }
-}
-
-// these modulate functions could be made parametric with different modulations and different sources
-function modulateNoise(source) {
-  return source
-      .modulate(noise()
-      .scale(2 + Math.random() * 4)
-      .scrollX(Math.random(), 0.5 * Math.random())
-      .rotate(Math.random() * 3.14)
-      .modulate(noise()
-        .scale(2 + Math.random() * 4)
-        .scrollX(Math.random(), 0.5 * Math.random())
-        .rotate(Math.random() * 3.14)))
-}
-
-function modulateRepeatNoise(source) {
-  return source
-      .modulateRepeat(noise()
-      .scale(2 + Math.random() * 4)
-      .scrollX(Math.random(), 0.5 * Math.random())
-      .rotate(Math.random() * 3.14)
-      .modulate(noise()
-        .scale(2 + Math.random() * 4)
-        .scrollX(Math.random(), 0.5 * Math.random())
-        .rotate(Math.random() * 3.14)))
-}
-
-function modulatePixelateNoise(source) {
-  return source
-      .modulatePixelate(noise()
-      .scale(10 + Math.random() * 4)
-      .scrollX(Math.random(), Math.random() * 0.2)
-      .rotate(3.14 * Math.random())
-      .modulate(noise()
-      .scale(10 + Math.random() * 4)
-      .scrollX(Math.random(), Math.random() * 0.2)
-      .rotate(3.14 * Math.random())), Math.random() * 20, Math.random() * 100)
-}
-
-function modulateScaleNoise(source) {
-  return source
-      .modulateScale(noise()
-      .scale(10 + Math.random() * 4)
-      .scrollX(Math.random(), Math.random() * 0.2)
-      .rotate(3.14 * Math.random())
-      .modulate(noise()
-      .scale(10 + Math.random() * 4)
-      .scrollX(Math.random(), Math.random() * 0.2)
-      .rotate(3.14 * Math.random())))
-}
-
-function modulateVoronoi(source) {
-  return  source
-      .modulate(voronoi()
-      .scrollX(Math.random(), Math.random() * 0.5)
-      .rotate(3.14 * Math.random())
-      .modulate(voronoi()
-        .scrollX(Math.random(), Math.random() * 0.5)
-        .rotate(3.14 * Math.random())))
-}
-
-function modulateOsc(source) {
-  return source
-    .modulate(osc(20 * Math.random(), 0.2 * Math.random(), Math.random()).rotate(Math.random() * 3.14), Math.random())
 }
 
 function modulateFeedback(source) {
   const randScrollX = Math.random()
   const randScrollY = Math.random()
+  const randModulate = Math.random()
   source
-    .modulate(src(o0).scrollX(0, randScrollY).scrollY(0, randScrollX), Math.random())
+    .modulate(src(o0).scrollX(0, ()=>randScrollY).scrollY(0, ()=>randScrollX), ()=>randModulate)
     .out(o0)
   return src(o0)
 }
 
 function colorSub(source) {
+  const rand1 = Math.random()
+  const rand2 = Math.random()
+  const rand3 = Math.random()
+  const rand4 = Math.random()
   return source
-    .diff(osc(10 * Math.random(), Math.random(), 0.75).modulateScale(noise().scale(4 + 2 * Math.random())).rotate(2 * Math.random()))
+    .diff(osc(()=>10 * rand1, ()=>rand2, 0.75).modulateScale(noise().scale(()=>(4 + 2 * rand3))).rotate(()=>2 * rand4))
 }
 
 function colorSweep(source) {
+  const rand1 = Math.random()
+  const rand2 = Math.random()
   source.out(o0)
-  osc(10,Math.random() - 0.5,1).rotate(Math.random() * 3.14).mask(solid().layer(src(o0))).out(o1)
+  osc(10,()=>rand1 - 0.5,1).rotate(()=>rand2 * 3.14).mask(solid().layer(src(o0))).out(o1)
   return src(o1)
 }
 
 function modulateHue(source) {
+  const rand1 = Math.random()
   source.out(o0)
-src(o1)
-  .modulateHue(src(o1).scale(1.01),1)
-  .layer(osc(4,0.5,2).rotate(Math.random() * 3.14).mask(o0))
-  .out(o1)
+  src(o1)
+    .modulateHue(src(o1).scale(1.01),1)
+    .layer(osc(4,0.5,2).rotate(()=>rand1 * 3.14).mask(o0))
+    .out(o1)
   return src(o1)
 }
 
@@ -230,25 +173,31 @@ function intenseBuild(timing) {
 }
 
 function modulateRotate(source) {
-  let intensity = Math.random()
+  let rand1 = Math.random()
+  let rand2 = Math.random()
+  let rand3 = Math.random()
   source.out(o0)
-  source.modulateRotate(src(o0).scrollX(0, (Math.random() - 0.5) * 0.1).scrollY(0, (Math.random() - 0.5) * 0.1), intensity)
+  source.modulateRotate(src(o0).scrollX(0, ()=>(rand1 - 0.5) * 0.1).scrollY(0, ()=>(rand2 - 0.5) * 0.1), ()=>rand3)
       .out(o1)
   return src(o1)
 }
 
 function feedback(source) {
-  let intensity = Math.random()
+  let rand1 = Math.random()
+  let rand2 = Math.random()
+  let rand3 = Math.random()
   source.out(o0)
-  src(o0).modulate(src(o1).scrollX(0, (Math.random() - 0.5) * 0.1).scrollY(0, (Math.random() - 0.5) * 0.1), intensity)
+  src(o0).modulate(src(o1).scrollX(0, ()=>(rand1 - 0.5) * 0.1).scrollY(0, ()=>(rand2 - 0.5) * 0.1), ()=>rand3)
       .out(o1)
   return src(o1)
 }
 
 function selfModulate(source) {
-  let intensity = Math.random()
+  let rand1 = Math.random()
+  let rand2 = Math.random()
+  let rand3 = Math.random()
   source.out(o0)
-  source.modulate(src(o0).scrollX(0, (Math.random() - 0.5) * 0.1).scrollY(0, (Math.random() - 0.5) * 0.1), intensity)
+  source.modulate(src(o0).scrollX(0, ()=>(rand1 - 0.5) * 0.1).scrollY(0, ()=>(rand2 - 0.5) * 0.1), ()=>rand3)
       .out(o1)
   return src(o1)
 }
