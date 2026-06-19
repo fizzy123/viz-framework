@@ -10,8 +10,8 @@ src(s0)
 	.modulateRotate(noise(1))
 	.modulateScale(o1)
 	.scale(1.1, 0.9)
-  .out(o2)
+  .out(o0)
 }
 function glitchAsapWords() {
-  return src(o2)
+  return src(o0)
 }

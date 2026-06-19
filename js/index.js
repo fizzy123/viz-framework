@@ -28,7 +28,7 @@ function setupHydraSources() {
     detectAudio: false,
     canvas: canvas,
     numSources: 17,
-    numOutputs: 5,
+    numOutputs: 7,
     precision: 'highp',
   })
   s4.initScreen()
@@ -205,47 +205,46 @@ function startNewExpression() {
 
   stopAsciiViz()
   console.log("stopped ascii viz", Date.now() - start)
-  // get random source
-  source = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources)
-  
-  let output = ""
-  // check if source has keyColor
-  if (source.keyColor && Math.random() > 0.0) {
-    // get another source to be background
-    bgSrc = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources.concat([new PIPSrc()]))
-    let keyColor = source.keyColor()
+  // set new sources
+  let source1 = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources)
+  source1.render().out(o2)
+  let source2 = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources)
+  source2.render().out(o3)
+
+  // set new expressions
+  expRender(source1, o4)
+  expRender(source2, o5)
+  console.log("exprender", Date.now() - start)
+
+  // old code for adding impulses. will need to be updated
+  //  if (Math.random() < 0) {
+  //  output = randomChoice(IMPULSES)(output)
+  //}
+
+  if (source2.keyColor) {
+    let keyColor = source2.keyColor()
     CHROMA_COLOR.r = keyColor.r
     CHROMA_COLOR.g = keyColor.g
     CHROMA_COLOR.b = keyColor.b
-    if (keyColor) {
-      output = expRender(bgSrc).layer(
-        expRender(source).chroma(()=>CHROMA_COLOR.r,()=>CHROMA_COLOR.g,()=>CHROMA_COLOR.b)
-      )
-    } else {
-      output = expRender(source)
-    }
   } else {
-    output = expRender(source)
+    CHROMA_COLOR.r = -1
+    CHROMA_COLOR.g = -1
+    CHROMA_COLOR.b = -1
   }
-
-  if (Math.random() < 0) {
-    output = randomChoice(IMPULSES)(output)
-  }
-  console.log("exprender", Date.now() - start)
-  output.out(o3)
+  src(o4).layer(src(o5).chroma(()=>CHROMA_COLOR.r,()=>CHROMA_COLOR.g,()=>CHROMA_COLOR.b)).out(o6)
   console.log("output.out", Date.now() - start)
-  render(o3)
+  render(o6)
   console.log("render", Date.now() - start)
 }
 
-function expRender(source) {
+function expRender(source, output) {
   console.log(source)
   let expression = randomChoice(source.expressions)
   console.log(expression)
   if (source.keyColor) {
-    return expression(source.render(), source.keyColor())
+    expression(source.render(), source.keyColor()).out(output)
   }
-  return expression(source.render())
+  expression(source.render()).out(output)
 }
 
 document.documentElement.style.cursor = 'none';
