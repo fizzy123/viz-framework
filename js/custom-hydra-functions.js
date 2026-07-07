@@ -21,9 +21,9 @@ function setCustomHydraFunctions() {
       },
           ],
       glsl: `
-          float colorDistance = distance(_c0.rgb, vec3(keyR,keyG,keyB));
+          float colorDistance = distance(_c0.rgb, vec3(keyR/255.0,keyG/255.0,keyB/255.0));
           float k = step(0.1, colorDistance);
-          return vec4(_c0.rgb, min(k, _c0.a));
+          return vec4(_c0.rgb, k);
   `})
 
   setFunction({

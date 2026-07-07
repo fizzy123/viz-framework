@@ -16,6 +16,11 @@ let SETLIST = []
 // s6 for ableon
 // s7 for cmd
 // s8-16 are for images and videos
+//
+// o0, 1 in case sources need them for buffer
+// o2-3 source output
+// o4-5 expression output
+// o6 overall layered output
 
 function setupHydraSources() {
   const canvas = document.getElementById("hydra");
@@ -195,6 +200,14 @@ IMPULSES = [
   impulseY,
 ]
 
+const impulse = (source) => {
+  let now = Date.now()
+  return source.scrollX(()=>{
+    let dif = (Date.now() - now)/100
+    return expImpulse(dif, 40)
+  })
+}
+
 let lastExpression = null
 let playedHighSourceLast = false
 localStorage.SET_INDEX = "0"
@@ -207,44 +220,51 @@ function startNewExpression() {
   console.log("stopped ascii viz", Date.now() - start)
   // set new sources
   let source1 = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources)
-  source1.render().out(o2)
+  source1.render(o0).out(o2)
   let source2 = randomChoice(SETLIST[parseInt(localStorage.SET_INDEX)].sources)
-  source2.render().out(o3)
+  source2.render(o1).out(o3)
 
   // set new expressions
-  expRender(source1, o4)
-  expRender(source2, o5)
+  expRender(source1, o2, o4)
+  expRender(source2, o3, o5)
   console.log("exprender", Date.now() - start)
 
   // old code for adding impulses. will need to be updated
   //  if (Math.random() < 0) {
   //  output = randomChoice(IMPULSES)(output)
   //}
-
-  if (source2.keyColor) {
-    let keyColor = source2.keyColor()
-    CHROMA_COLOR.r = keyColor.r
-    CHROMA_COLOR.g = keyColor.g
-    CHROMA_COLOR.b = keyColor.b
+  let randScrollX = (Math.random() - 0.5) * 0.1
+  let randScrollY = (Math.random() - 0.5) * 0.1
+  if (Math.random() > 0.5) {
+    if (source2.keyColor) {
+      let keyColor = source2.keyColor()
+      CHROMA_COLOR.r = keyColor.r
+      CHROMA_COLOR.g = keyColor.g
+      CHROMA_COLOR.b = keyColor.b
+    } else {
+      CHROMA_COLOR.r = -1
+      CHROMA_COLOR.g = -1
+      CHROMA_COLOR.b = -1
+    }
+  
+    impulse(src(o4).layer(src(o5).chroma(()=>CHROMA_COLOR.r,()=>CHROMA_COLOR.g,()=>CHROMA_COLOR.b).scrollX(0, ()=>randScrollX).scrollY(0, ()=>randScrollY))).out(o6)
   } else {
-    CHROMA_COLOR.r = -1
-    CHROMA_COLOR.g = -1
-    CHROMA_COLOR.b = -1
+    impulse(src(o4).modulate(src(o5).scrollX(0, ()=>randScrollX).scrollY(0, ()=>randScrollY))).out(o6)
   }
-  src(o4).layer(src(o5).chroma(()=>CHROMA_COLOR.r,()=>CHROMA_COLOR.g,()=>CHROMA_COLOR.b)).out(o6)
   console.log("output.out", Date.now() - start)
   render(o6)
   console.log("render", Date.now() - start)
 }
 
-function expRender(source, output) {
+function expRender(source, sourceOut, out) {
   console.log(source)
   let expression = randomChoice(source.expressions)
   console.log(expression)
   if (source.keyColor) {
-    expression(source.render(), source.keyColor()).out(output)
+    expression(sourceOut, out, source.keyColor())
+  } else {
+    expression(sourceOut, out)
   }
-  expression(source.render()).out(output)
 }
 
 document.documentElement.style.cursor = 'none';
